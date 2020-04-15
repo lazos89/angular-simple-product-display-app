@@ -27,7 +27,14 @@
       >
         Home
       </a>
-
+      <a
+        class="navbar-item"
+        [routerLink]="['/customers']"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Customers
+      </a>
       <a
         class="navbar-item"
         [routerLink]="['/products']"

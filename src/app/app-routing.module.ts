@@ -10,10 +10,17 @@ const routes: Routes = [
   {
     path: "products",
     // canLoad: [AuthGuard],
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     data: { preload: true },
     loadChildren: () =>
       import("./products/products.module").then((m) => m.ProductsModule),
+  },
+  {
+    path: "customers",
+    // canActivate: [AuthGuard],
+    data: { preload: true },
+    loadChildren: () =>
+      import("./customers/customers.module").then((m) => m.CustomersModule),
   },
   { path: "", pathMatch: "full", redirectTo: "welcome" },
   { path: "**", component: PageNotFoundComponent },
