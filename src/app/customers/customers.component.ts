@@ -7,7 +7,9 @@ import {
   Validators,
   AbstractControl,
   ValidatorFn,
+  FormArray,
 } from "@angular/forms";
+import { debounceTime } from "rxjs/operators";
 
 function emailMatcher(c: AbstractControl): { [key: string]: boolean } | null {
   const emailControl = c.get("email");
@@ -42,8 +44,16 @@ function ratingRange(min: number, max: number): ValidatorFn {
 export class CustomersComponent implements OnInit {
   customer = new Customer();
   customerForm: FormGroup;
+  emailMessage: string;
+  private validationMessage = {
+    required: "Please enter your email address.",
+    valid: "Please enter a valid email address.",
+  };
   constructor(private fb: FormBuilder) {}
 
+  get addresses(): FormArray {
+    return <FormArray>this.customerForm.get("addresses");
+  }
   ngOnInit() {
     this.customerForm = this.fb.group({
       firstName: ["", [Validators.required, Validators.minLength(3)]],
@@ -59,8 +69,27 @@ export class CustomersComponent implements OnInit {
       notification: "email",
       rating: [null, ratingRange(1, 5)],
       sendCatalog: true,
+      addresses: this.fb.array([this.buildAddresses()]),
     });
-    console.log(this.customerForm);
+
+    this.customerForm
+      .get("notification")
+      .valueChanges.subscribe((value) => this.setNoticifation(value));
+    const emailControl = this.customerForm.get("emailGroup.email");
+    emailControl.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((value) => this.setMessage(emailControl));
+  }
+
+  buildAddresses(): FormGroup {
+    return this.fb.group({
+      addressType: "home",
+      street1: "",
+      street2: "",
+      city: "",
+      state: "",
+      zip: "",
+    });
   }
 
   save() {
@@ -83,12 +112,29 @@ export class CustomersComponent implements OnInit {
 
   setNoticifation(value: string) {
     const phoneControl = this.customerForm.get("phone");
-    console.log(phoneControl);
     if (value === "text") {
       phoneControl.setValidators(Validators.required);
     } else {
       phoneControl.clearValidators();
     }
     phoneControl.updateValueAndValidity();
+  }
+
+  setMessage(c: AbstractControl) {
+    this.emailMessage = " ";
+    if ((c.touched || c.dirty) && c.errors) {
+      this.emailMessage = Object.keys(c.errors)
+        .map((key) => this.validationMessage[key])
+        .join(" ");
+    }
+  }
+
+  isInValid(crtl: string) {
+    const { dirty, touched, valid } = this.customerForm.get(crtl);
+    return (dirty || touched) && !valid;
+  }
+
+  addAddress() {
+    this.addresses.push(this.buildAddresses());
   }
 }
