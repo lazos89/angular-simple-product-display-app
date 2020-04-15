@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ConvertToSpacesPipe } from "../core/pipes/convert-to-spaces.pipe";
 import { SharedModule } from "../shared/shared.module";
 import { ProductDetailsComponent } from "./product-details/product-details.component";
@@ -20,6 +20,6 @@ import { ProductEditTagsComponent } from "./product-edit/product-edit-tags/produ
     ProductEditInfoComponent,
     ProductEditTagsComponent,
   ],
-  imports: [SharedModule, ProductRoutingModule],
+  imports: [SharedModule, ReactiveFormsModule, ProductRoutingModule],
 })
 export class ProductsModule {}
