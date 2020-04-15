@@ -1,0 +1,93 @@
+<div class="card">
+  <!-- <div class="card-header">
+    {{ pageTitle }}
+  </div> -->
+
+  <div class="card-content" *ngIf="product">
+    <form novalidate #productForm="ngForm">
+      <div class="columns">
+        <label class="column is-one-quarter label" for="productNameId"
+          >Product Name</label
+        >
+        <div class="column is-three-quarters">
+          <input
+            class="input"
+            id="productNameId"
+            type="text"
+            placeholder="Name (required)"
+            required
+            minlength="3"
+            [(ngModel)]="product.productName"
+            name="productName"
+            #productNameVar="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (productNameVar.touched ||
+                  productNameVar.dirty ||
+                  product.id !== 0) &&
+                !productNameVar.valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="productNameVar.errors?.required">
+              Product name is required.
+            </span>
+            <span *ngIf="productNameVar.errors?.minlength">
+              Product name must be at least three characters.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="columns">
+        <label class="column is-one-quarter label" for="productCodeId"
+          >Product Code</label
+        >
+        <div class="column is-three-quarters">
+          <input
+            class="input"
+            id="productCodeId"
+            type="text"
+            placeholder="Code (required)"
+            required
+            [(ngModel)]="product.productCode"
+            name="productCode"
+            #productCodeVar="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (productCodeVar.touched ||
+                  productCodeVar.dirty ||
+                  product.id !== 0) &&
+                !productCodeVar.valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="productCodeVar.errors?.required">
+              Product code is required.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="columns">
+        <label class="column is-one-quarter label" for="descriptionId"
+          >Description</label
+        >
+        <div class="column is-three-quarters">
+          <textarea
+            class="input"
+            id="descriptionId"
+            placeholder="Description"
+            rows="3"
+            [(ngModel)]="product.description"
+            name="description"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="notification is-danger" *ngIf="errorMessage">
+  {{ errorMessage }}
+</div>

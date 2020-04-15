@@ -1,0 +1,80 @@
+<div class="card">
+  <div class="card-header">{{ pageTitle }}</div>
+  <div class="card-content">
+    <div class="columns">
+      <div class="column is-one-fifth">Filter By</div>
+      <div class="column is-one-fifth">
+        <input type="text" [(ngModel)]="listFilter" />
+      </div>
+    </div>
+    <div class="container">
+      <div class="columns">
+        <div class="column">
+          <table
+            class="table is-striped is-narrow is-hoverable is-fullwidth"
+            *ngIf="products && products.length"
+          >
+            <thead>
+              <tr>
+                <th>
+                  <button class="button is-primary" (click)="onShowClicked()">
+                    {{ showImage ? "Hide" : "Show" }} Image
+                  </button>
+                </th>
+                <th>Product</th>
+                <th>Code</th>
+                <th>Avaliable</th>
+                <th>Price</th>
+                <th>5 Star Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of filteredProducts">
+                <td>
+                  <img
+                    *ngIf="showImage"
+                    [src]="product.imageUrl"
+                    [title]="product.productName"
+                    [style.width.px]="imageWidth"
+                    [style.margin.px]="imageMargin"
+                  />
+                </td>
+                <td>
+                  <a
+                    [routerLink]="['/products', product.id]"
+                    [queryParams]="{
+                      filterBy: listFilter,
+                      showImage: showImage
+                    }"
+                    >{{ product.productName | uppercase }}</a
+                  >
+                </td>
+                <td>
+                  {{ product.productCode | lowercase | convertToSpaces: "-" }}
+                </td>
+                <td>{{ product.releaseDate | date }}</td>
+                <td>
+                  {{
+                    product.price | currency: "EUR":"symbol":"1.2-2" | lowercase
+                  }}
+                </td>
+                <td>
+                  <app-star-component
+                    [rating]="product.starRating"
+                    (ratingClicked)="onRatingClicked($event)"
+                  ></app-star-component>
+                </td>
+                <td>
+                  <a
+                    class="fas fa-edit"
+                    [routerLink]="['/products', product.id, 'edit']"
+                  ></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

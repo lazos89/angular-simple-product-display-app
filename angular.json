@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "angular-simple-product-display-app": {
@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-simple-product-display-app"
+    }
+  },
+  "defaultProject": "angular-simple-product-display-app",
+  "cli": {
+    "analytics": "2c72facd-e7a6-42c8-b46b-11fe7e2f3beb"
+  }
 }

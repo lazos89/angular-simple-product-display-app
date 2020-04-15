@@ -1,0 +1,92 @@
+<div class="card">
+  <div class="card-header">
+    Product Tag Search
+  </div>
+
+  <div class="card-content" *ngIf="product">
+    <form novalidate #productForm="ngForm">
+      <div class="columns">
+        <label class="column is-one-quarter label" for="productNameId"
+          >Category</label
+        >
+        <div class="column is-three-quarters">
+          <input
+            class="input"
+            id="categoryId"
+            type="text"
+            placeholder="Category (required)"
+            required
+            minlength="3"
+            [(ngModel)]="product.category"
+            name="category"
+            #categoryVar="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (categoryVar.touched ||
+                  categoryVar.dirty ||
+                  product.id !== 0) &&
+                !categoryVar.valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="categoryVar.errors?.required">
+              Category is required.
+            </span>
+            <span *ngIf="categoryVar.errors?.minlength">
+              Category name must be at least three characters.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="columns">
+        <label class="column is-one-quarter label" for="productCodeId"
+          >Product Code</label
+        >
+        <div class="column is-three-quarters">
+          <input
+            class="input"
+            id="tagsId"
+            type="text"
+            placeholder="Search keywords separated by commas"
+            [(ngModel)]="newTags"
+            name="tags"
+          />
+          <button
+            class="button mr-3"
+            style="width: 80px;"
+            type="button"
+            title="Enter the search keywords separated by commas and then press Add"
+            (click)="addTags()"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column is-one-quarter label">
+          <span *ngFor="let tag of product.tags; let i = index">
+            <button
+              class="button mr-3"
+              style="
+                font-size: smaller;
+                margin-bottom: 12px;
+                margin-right: 2px;
+              "
+              title="Click to remove this tag"
+              (click)="removeTag(i)"
+            >
+              {{ tag }}
+              <span class="fa fa-times-circle"></span>
+            </button>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="notification is-danger" *ngIf="errorMessage">
+  {{ errorMessage }}
+</div>

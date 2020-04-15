@@ -1,0 +1,180 @@
+<div class="card">
+  <div class="card-header">
+    {{ pageTitle }}
+  </div>
+
+  <div class="card-content" *ngIf="product">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li [routerLink]="['info']" routerLinkActive="is-active">
+          <a
+            >Basic Inforamtion
+            <span [ngClass]="{ 'fas fa-exclamation': !isValid('info') }"> </span
+          ></a>
+        </li>
+        <li
+          routerLinkActive="is-active"
+          [routerLink]="['tags']"
+          aria-current="page"
+        >
+          <a
+            >Search Tags
+            <span [ngClass]="{ 'fas fa-exclamation': !isValid('tags') }"> </span
+          ></a>
+        </li>
+      </ul>
+    </nav>
+
+    <router-outlet></router-outlet>
+    <div class="columns is-one-fifth">
+      <div class="column is-two-fifths">
+        <button
+          class="button mr-3"
+          style="width: 80px;"
+          type="button"
+          title="Save your enterd data"
+          [disabled]="!isValid()"
+          (click)="saveProduct()"
+        >
+          Save
+        </button>
+        <button
+          class="button mr-3"
+          style="width: 80px;"
+          type="button"
+          title="Cancel your edits"
+          [routerLink]="['/products']"
+        >
+          Cancel
+        </button>
+        <button
+          class="button is-warning"
+          style="width: 80px;"
+          type="button"
+          title="Delete this product"
+          (click)="deleteProduct()"
+        >
+          Delete
+        </button>
+        <!-- <form novalidate #productForm="ngForm">
+      <div class="columns">
+        <label class="column is-one-quarter label" for="productNameId"
+          >Product Name</label
+        >
+        <div class="column is-three-quarters">
+          <input
+            class="input"
+            id="productNameId"
+            type="text"
+            placeholder="Name (required)"
+            required
+            minlength="3"
+            [(ngModel)]="product.productName"
+            name="productName"
+            #productNameVar="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (productNameVar.touched || productNameVar.dirty) &&
+                !productNameVar.valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="productNameVar.errors?.required">
+              Product name is required.
+            </span>
+            <span *ngIf="productNameVar.errors?.minlength">
+              Product name must be at least three characters.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="columns">
+        <label class="column is-one-quarter label" for="productCodeId"
+          >Product Code</label
+        >
+        <div class="column is-three-quarters">
+          <input
+            class="input"
+            id="productCodeId"
+            type="text"
+            placeholder="Code (required)"
+            required
+            [(ngModel)]="product.productCode"
+            name="productCode"
+            #productCodeVar="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (productCodeVar.touched || productCodeVar.dirty) &&
+                !productCodeVar.valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="productCodeVar.errors?.required">
+              Product code is required.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="columns">
+        <label class="column is-one-quarter label" for="descriptionId"
+          >Description</label
+        >
+        <div class="column is-three-quarters">
+          <textarea
+            class="input"
+            id="descriptionId"
+            placeholder="Description"
+            rows="3"
+            [(ngModel)]="product.description"
+            name="description"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="columns is-one-fifth">
+        <div class="column is-two-fifths">
+          <button
+            class="button mr-3"
+            style="width: 80px;"
+            type="button"
+            [title]="
+              productForm.valid
+                ? 'Save your entered data'
+                : 'Disabled until the form data is valid'
+            "
+            [disabled]="!productForm.valid"
+            (click)="saveProduct()"
+          >
+            Save
+          </button>
+          <button
+            class="button mr-3"
+            style="width: 80px;"
+            type="button"
+            title="Cancel your edits"
+            [routerLink]="['/products']"
+          >
+            Cancel
+          </button>
+          <button
+            class="button is-warning"
+            style="width: 80px;"
+            type="button"
+            title="Delete this product"
+            (click)="deleteProduct()"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </form> -->
+      </div>
+    </div>
+
+    <div class="notification is-danger" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div>

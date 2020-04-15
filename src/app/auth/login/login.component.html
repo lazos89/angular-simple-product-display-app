@@ -1,0 +1,59 @@
+<div class="card">
+  <div class="content">
+    <form
+      novalidate
+      (ngSubmit)="login(loginForm)"
+      #loginForm="ngForm"
+      autocomplete="off"
+    >
+      <div class="field">
+        <p class="control has-icons-left has-icons-right">
+          <input
+            class="input"
+            type="email"
+            ngModel
+            name="userName"
+            #userNameVar="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid
+            }"
+            placeholder="Email"
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <span class="icon is-small is-right">
+            <i class="fas fa-check"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control has-icons-left">
+          <input
+            class="input"
+            type="password"
+            ngModel
+            name="password"
+            #passwordVar="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid
+            }"
+            placeholder="Password"
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control">
+          <button class="button is-success">
+            Login
+          </button>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
